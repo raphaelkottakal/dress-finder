@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { TweenMax, TimelineMax } from 'gsap';
 import _ from 'lodash';
 
 import 'normalize.css/normalize.css';
@@ -22,6 +23,10 @@ export default class Page extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		TweenMax.from(this.refs.container, 0.5, { y: '100%', autoAlpha: 0 });		
+	}
+
 	getCurrentObj() {
 		if (this.state.subQuestion) {
 			return qData[this.state.count].options[this.state.subQuestionNo].subQuestion;
@@ -40,11 +45,16 @@ export default class Page extends React.Component {
 		// console.log(this, qKey, key);
 		let newAnswersArray = this.state.answersArray;
 		newAnswersArray.push({qKey,key});
-		this.setState({
-			subQuestion: false,
-			count: this.state.count + 1,
-			answersArray: newAnswersArray
-		});
+
+		TweenMax.to(this.refs.container, 0.5, { y: '100%', autoAlpha: 0, onComplete: ()=>{
+			this.setState({
+				subQuestion: false,
+				count: this.state.count + 1,
+				answersArray: newAnswersArray
+			});
+			this.refs.container.scrollTop = 0;
+			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
+		} });
 	}
 
 	handelSubOptionClick(qKey, key) {
@@ -58,21 +68,29 @@ export default class Page extends React.Component {
 			)
 		});
 
-
-		this.setState({
-			subQuestion: true,
-			subQuestionNo: subQuestionIndex,
-			answersArray: newAnswersArray
-		});
+		TweenMax.to(this.refs.container, 0.5, { y: '100%', autoAlpha: 0, onComplete: ()=>{
+			this.setState({
+				subQuestion: true,
+				subQuestionNo: subQuestionIndex,
+				answersArray: newAnswersArray
+			});
+			this.refs.container.scrollTop = 0;
+			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
+		} });
 	}
 
 	handelReset() {
-		this.setState({
-			subQuestion: false,
-			subQuestionNo: 0,
-			count: 0,
-			answersArray: []
-		});
+
+		TweenMax.to(this.refs.container, 0.5, { y: '100%', autoAlpha: 0, onComplete: ()=>{
+			this.setState({
+				subQuestion: false,
+				subQuestionNo: 0,
+				count: 0,
+				answersArray: []
+			});
+			this.refs.container.scrollTop = 0;
+			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
+		} });
 	}
 
 	renderOptions() {
@@ -137,7 +155,7 @@ export default class Page extends React.Component {
 		}
 
 		return(
-			<div style={styles.container}>
+			<div ref="container" style={styles.container}>
 
 				{(this.state.count >= this.state.countLength) 
 
