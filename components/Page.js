@@ -41,23 +41,29 @@ export default class Page extends React.Component {
 		return currentObj.question;
 	}
 
-	handelOptionClick(qKey, key) {
-		// console.log(this, qKey, key);
+	handelOptionClick(qKey, key, e) {
+		const target = e.target.closest('.option');
+
+		TweenMax.to(target, 0.25, { autoAlpha: 0.5});
 		let newAnswersArray = this.state.answersArray;
 		newAnswersArray.push({qKey,key});
 
-		TweenMax.to(this.refs.container, 0.5, { y: '100%', autoAlpha: 0, onComplete: ()=>{
+		TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
 			this.setState({
 				subQuestion: false,
 				count: this.state.count + 1,
 				answersArray: newAnswersArray
 			});
+			TweenMax.set(target, { autoAlpha: 1});
 			this.refs.container.scrollTop = 0;
 			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
 		} });
 	}
 
-	handelSubOptionClick(qKey, key) {
+	handelSubOptionClick(qKey, key,e) {
+		const target = e.target.closest('.option');
+
+		TweenMax.to(target, 0.25, { autoAlpha: 0.5});
 		const currentObj = this.getCurrentObj();
 		let newAnswersArray = this.state.answersArray;
 		newAnswersArray.push({qKey,key});
@@ -68,12 +74,13 @@ export default class Page extends React.Component {
 			)
 		});
 
-		TweenMax.to(this.refs.container, 0.5, { y: '100%', autoAlpha: 0, onComplete: ()=>{
+		TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
 			this.setState({
 				subQuestion: true,
 				subQuestionNo: subQuestionIndex,
 				answersArray: newAnswersArray
 			});
+			TweenMax.set(target, { autoAlpha: 1});
 			this.refs.container.scrollTop = 0;
 			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
 		} });
@@ -103,14 +110,14 @@ export default class Page extends React.Component {
 			if (subQuestion) {
 
 				return (
-					<div onClick={this.handelSubOptionClick.bind(this, qKey, key)} key={i}>
+					<div className="option" onClick={this.handelSubOptionClick.bind(this, qKey, key)} key={i}>
 						<img src={image} />
 						<div>{text}</div>
 					</div>
 				);
 			}
 			return (
-				<div onClick={this.handelOptionClick.bind(this, qKey, key)} key={i}>
+				<div className="option" onClick={this.handelOptionClick.bind(this, qKey, key)} key={i}>
 					<img src={image} />
 					<div>{text}</div>
 				</div>
