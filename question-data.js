@@ -8,7 +8,7 @@ export default [
 			{
 				image: 'https://placehold.it/300x300&text=Option one',
 				text: 'This is option one',
-				key: 'q one',
+				key: 'Casual Outing',
 				subQuestion: 
 					{
 						question: 'Question 1a Try it',
@@ -18,7 +18,7 @@ export default [
 							{
 								image: 'https://placehold.it/300x300&text=Option one',
 								text: 'This is option one',
-								key: 'q one'
+								key: 'Feminine'
 							},
 							{
 								image: 'https://placehold.it/300x300&text=Option two',
@@ -86,7 +86,7 @@ export default [
 			{
 				image: 'https://placehold.it/300x300&text=Option one',
 				text: 'This is option one',
-				key: 'q one'
+				key: 'Shape ID 324'
 			},
 			{
 				image: 'https://placehold.it/300x300&text=Option two',
@@ -113,7 +113,7 @@ export default [
 			{
 				image: 'https://placehold.it/300x300&text=Option one',
 				text: 'This is option one',
-				key: 'q one'
+				key: 'I want to hide my tummy'
 			},
 			{
 				image: 'https://placehold.it/300x300&text=Option two',

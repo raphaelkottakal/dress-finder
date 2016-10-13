@@ -9,12 +9,14 @@ import '../css/main.css';
 import Ga from '../functions/Ga';
 
 import qData from '../question-data';
+import rData from '../result-data';
 
 export default class Page extends React.Component {
 
 	constructor() {
 		super();
 		this.state = {
+			optionClicked: false,
 			subQuestion: false,
 			subQuestionNo: 0,
 			count: 0,
@@ -42,48 +44,68 @@ export default class Page extends React.Component {
 	}
 
 	handelOptionClick(qKey, key, e) {
-		const target = e.target.closest('.option');
-
-		TweenMax.to(target, 0.25, { autoAlpha: 0.5});
-		let newAnswersArray = this.state.answersArray;
-		newAnswersArray.push({qKey,key});
-
-		TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
+		if(!this.state.optionClicked) {
 			this.setState({
-				subQuestion: false,
-				count: this.state.count + 1,
-				answersArray: newAnswersArray
+				optionClicked: true
 			});
-			TweenMax.set(target, { autoAlpha: 1});
-			this.refs.container.scrollTop = 0;
-			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
-		} });
+
+			const target = e.target.closest('.option');
+
+			TweenMax.to(target, 0.25, { autoAlpha: 0.5});
+			let newAnswersArray = this.state.answersArray;
+			newAnswersArray.push({qKey,key});
+
+			TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
+				this.setState({
+					subQuestion: false,
+					count: this.state.count + 1,
+					answersArray: newAnswersArray
+				});
+				TweenMax.set(target, { autoAlpha: 1});
+				this.refs.container.scrollTop = 0;
+				TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1, onComplete: () => {
+					this.setState({
+						optionClicked: false
+					});
+				} });
+			} });
+		}
 	}
 
 	handelSubOptionClick(qKey, key,e) {
-		const target = e.target.closest('.option');
-
-		TweenMax.to(target, 0.25, { autoAlpha: 0.5});
-		const currentObj = this.getCurrentObj();
-		let newAnswersArray = this.state.answersArray;
-		newAnswersArray.push({qKey,key});
-
-		let subQuestionIndex = _.findIndex(currentObj.options, (o) => {
-			return (
-				o.key == key
-			)
-		});
-
-		TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
+		if(!this.state.optionClicked) {
 			this.setState({
-				subQuestion: true,
-				subQuestionNo: subQuestionIndex,
-				answersArray: newAnswersArray
+				optionClicked: true
 			});
-			TweenMax.set(target, { autoAlpha: 1});
-			this.refs.container.scrollTop = 0;
-			TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1 });
-		} });
+
+			const target = e.target.closest('.option');
+
+			TweenMax.to(target, 0.25, { autoAlpha: 0.5});
+			const currentObj = this.getCurrentObj();
+			let newAnswersArray = this.state.answersArray;
+			newAnswersArray.push({qKey,key});
+
+			let subQuestionIndex = _.findIndex(currentObj.options, (o) => {
+				return (
+					o.key == key
+				)
+			});
+
+			TweenMax.to(this.refs.container, 0.5, { delay: 0.25, y: '100%', autoAlpha: 0, onComplete: ()=>{
+				this.setState({
+					subQuestion: true,
+					subQuestionNo: subQuestionIndex,
+					answersArray: newAnswersArray
+				});
+				TweenMax.set(target, { autoAlpha: 1});
+				this.refs.container.scrollTop = 0;
+				TweenMax.to(this.refs.container, 0.5, { y: '0%', autoAlpha: 1, onComplete: () => {
+					this.setState({
+						optionClicked: false
+					});
+				} });
+			} });
+		}
 	}
 
 	handelReset() {
@@ -144,6 +166,11 @@ export default class Page extends React.Component {
 	}
 
 	renderResult() {
+
+		console.log(rData);
+
+
+
 		return 'Result';
 	}
 
