@@ -167,11 +167,45 @@ export default class Page extends React.Component {
 
 	renderResult() {
 
-		console.log(rData);
+		const a1 = _.find(this.state.answersArray, o => o.qKey == 'ANSWER Q1' );
+		const a2 = (_.find(this.state.answersArray, o => o.qKey == 'ANSWER Q2' )) ? _.find(this.state.answersArray, o => o.qKey == 'ANSWER Q2' ) : {key: 'Skip'} ;
+		const a3 = _.find(this.state.answersArray, o => o.qKey == 'ANSWER Q3' );
+		const a4 = _.find(this.state.answersArray, o => o.qKey == 'ANSWER Q4' );
 
 
 
-		return 'Result';
+
+		let output = _.find(rData, (o) => { 
+
+			return (
+				o['ANSWER Q1'] == a1.key &&
+				o['ANSWER Q2'] == a2.key &&
+				o['ANSWER Q3'] == a3.key &&
+				o['ANSWER Q4'] == a4.key
+			);
+		});
+
+		if (output) {
+			return (
+			<div>
+				<div> {(output['CURATION - VIEW ALL']) ? <a target="_blank" href={output['CURATION - VIEW ALL']}>Curation</a> : '' }</div>
+				<div><strong>Sentance 1:</strong> {(output['SENTANCE 1']) ? output['SENTANCE 1'] : ''}</div>
+				<div><strong>Sentance 2:</strong> {(output['SENTANCE 2']) ? output['SENTANCE 2'] : ''}</div>
+				<div><strong>Sentance 3:</strong> {(output['SENTANCE 3']) ? output['SENTANCE 3'] : ''}</div>
+				<div><strong>Sentance 4:</strong> {(output['SENTANCE 4 - Tips']) ? output['SENTANCE 4 - Tips'] : ''}</div>
+			</div>
+		);
+		}
+
+		return (
+			<div>
+				<div><a target="_blank" href="http://www.myntra.com/women">Fallback curation</a></div>
+				<div><strong>Sentance 1:</strong> Fallback</div>
+				<div><strong>Sentance 2:</strong> Fallback</div>
+				<div><strong>Sentance 3:</strong> Fallback</div>
+				<div><strong>Sentance 4:</strong> Fallback</div>
+			</div>
+		);
 	}
 
 	render() {
