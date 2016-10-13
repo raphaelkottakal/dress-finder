@@ -30,6 +30,11 @@ export default [
 								text: 'This is option three',
 								key: 'Sporty'
 							},
+							{
+								image: 'https://placehold.it/300x300&text=Skip',
+								text: 'This is option three',
+								key: 'Skip'
+							},
 						]
 					},
 			},
@@ -57,6 +62,11 @@ export default [
 								image: 'https://placehold.it/300x300&text=Sophisticated',
 								text: 'This is option three',
 								key: 'Sophisticated'
+							},
+							{
+								image: 'https://placehold.it/300x300&text=Skip',
+								text: 'This is option three',
+								key: 'Skip'
 							},
 						]
 					},
@@ -92,6 +102,11 @@ export default [
 				image: 'https://placehold.it/300x300&text=Shape ID 443',
 				text: 'This is option four',
 				key: 'Shape ID 443'
+			},
+			{
+				image: 'https://placehold.it/300x300&text=Skip',
+				text: 'This is option three',
+				key: 'Skip'
 			},
 		]
 	},
@@ -129,6 +144,11 @@ export default [
 				image: 'https://placehold.it/300x300&text=I want to see dresses in Plus sizes',
 				text: 'This is option four',
 				key: 'I want to see dresses in Plus sizes'
+			},
+			{
+				image: 'https://placehold.it/300x300&text=Skip',
+				text: 'This is option three',
+				key: '(skip)'
 			},
 		]
 	},
